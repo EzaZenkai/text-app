@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Text Metrics Counter</string>
+    <string name="input_label">Text Input</string>
+    <string name="input_hint">Enter or paste text here…</string>
+    <string name="btn_calculate">Calculate</string>
+    <string name="btn_sample_text">Sample Text</string>
+    <string name="btn_clear">Clear</string>
+
+    <string name="title_metrics">Text Metrics</string>
+    <string name="label_words">Words</string>
+    <string name="label_chars_with_spaces">Characters (with spaces)</string>
+    <string name="label_numbers">Numbers</string>
+    <string name="label_chars_without_spaces">Characters (without spaces)</string>
+    <string name="label_sentences">Sentences</string>
+    <string name="label_lines">Lines</string>
+    <string name="default_metric_value">0</string>
+
+    <string name="title_history">Calculation History (runtime)</string>
+    <string name="btn_clear_history">Clear History</string>
+    <string name="history_empty">History is empty. Perform a calculation to see entries.</string>
+    <string name="history_item_summary">Sentences: %1$d | Words: %2$d | Characters: %3$d | Numbers: %4$d</string>
+    <string name="history_item_action_load">Tap to load</string>
+
+    <string name="error_empty_input">Input field cannot be empty!</string>
+    <string name="toast_empty_input">Error: Please enter text before calculating!</string>
+    <string name="toast_cleared">Text and results cleared</string>
+    <string name="toast_history_cleared">History cleared</string>
+    <string name="toast_sample_inserted">Test sample sentence #%1$d inserted</string>
+    <string name="toast_history_loaded">Text restored from history</string>
+
+    <string name="sample_text_1">Good morning</string>
+    <string name="sample_text_2">On September 1 the war began. Sad</string>
+    <string name="sample_text_3">On July 15 it rained.</string>
+    <string name="sample_text_4">Lithuanian nature is truly wonderful and rich! Dense oak groves whisper here, crystal clear rivers flow and lakes glimmer.\nDid you know that Lithuania has more than 6,000 lakes? It is a true wonder of nature!\nThe \"Text Metrics Counter\" app in 2026 allows you to quickly analyze any text.</string>
+</resources>

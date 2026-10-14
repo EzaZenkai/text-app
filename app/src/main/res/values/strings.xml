@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Teksto skaičiuoklė</string>
+    <string name="input_label">Teksto įvestis</string>
+    <string name="input_hint">Įveskite arba įklijuokite tekstą čia…</string>
+    <string name="btn_calculate">Skaičiuoti</string>
+    <string name="btn_sample_text">Pavyzdinis tekstas</string>
+    <string name="btn_clear">Išvalyti</string>
+
+    <string name="title_metrics">Teksto metrikos</string>
+    <string name="label_words">Žodžiai</string>
+    <string name="label_chars_with_spaces">Rašybos ženklai (su tarpais)</string>
+    <string name="label_numbers">Skaičiai</string>
+    <string name="label_chars_without_spaces">Simboliai (be tarpų)</string>
+    <string name="label_sentences">Sakiniai</string>
+    <string name="label_lines">Eilutės</string>
+    <string name="default_metric_value">0</string>
+
+    <string name="title_history">Skaičiavimų istorija (runtime)</string>
+    <string name="btn_clear_history">Išvalyti istoriją</string>
+    <string name="history_empty">Istorija tuščia. Atlikite skaičiavimą, kad pamatytumėte įrašus.</string>
+    <string name="history_item_summary">Sakiniai: %1$d | Žodžiai: %2$d | Rašybos ženklai: %3$d | Skaičiai: %4$d</string>
+    <string name="history_item_action_load">Spustelėkite įkėlimui</string>
+
+    <string name="error_empty_input">Įvesties laukas negali būti tuščias!</string>
+    <string name="toast_empty_input">Klaida: Prašome įvesti tekstą prieš skaičiuojant!</string>
+    <string name="toast_cleared">Tekstas ir rezultatai išvalyti</string>
+    <string name="toast_history_cleared">Istorija išvalyta</string>
+    <string name="toast_sample_inserted">Testavimo sakinys #%1$d įterptas</string>
+    <string name="toast_history_loaded">Tekstas atkurtas iš istorijos</string>
+
+    <string name="sample_text_1">Labas rytas</string>
+    <string name="sample_text_2">Rugsėjo 1 prasidėjo karas. Liūdna</string>
+    <string name="sample_text_3">Liepos 15 lyjo lietus.</string>
+    <string name="sample_text_4">Lietuvos gamta yra nuostabi ir turtinga! Čia ošia tankūs ąžuolynai, čiurlena skaidrios upės ir tyvuliuoja ežerai.\nAr žinojote, kad Lietuvoje yra daugiau nei 6000 ežerų? Tai tikras gamtos stebuklas!\nProgramėlė „Teksto skaičiuoklė“ 2026 m. leidžia greitai analizuoti bet kokį tekstą.</string>
+</resources>

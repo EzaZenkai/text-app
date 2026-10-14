@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="md_theme_primary">#1E88E5</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#D0E4FF</color>
+    <color name="md_theme_secondary">#26A69A</color>
+    <color name="md_theme_surface">#F8F9FA</color>
+    <color name="metric_card_bg">#F1F5F9</color>
+    <color name="metric_text_label">#64748B</color>
+    <color name="metric_text_value">#0F172A</color>
+    <color name="history_item_bg">#FFFFFF</color>
+</resources>
