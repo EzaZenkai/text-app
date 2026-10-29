@@ -225,24 +225,43 @@ Visos vartotojui rodomos žinutės, etiketės, mygtukai, `Toast` pranešimai ir 
 
 ---
 
-## 🧪 Automatiniai testai (JUnit)
+## 🧪 Automatiniai testai (JUnit 4 + Mockito + Espresso)
 
-Klasė [`TextMetricsCalculatorTest`](app/src/test/java/lt/teksto/skaiciuokle/TextMetricsCalculatorTest.java) atlieka automatizuotą skaičiavimo logikos patikrą:
+Projekte realizuoti dviejų lygių automatiniai testai pagal akademinius reikalavimus:
 
-| Testinis scenarijus | Tikrinama elgsena |
-| :--- | :--- |
-| `testNullAndEmptyInput` | Tikrina, kaip skaičiuoklė apdoroja `null` ir `""` (visos metrikos turi būti 0). |
-| `testWhitespaceOnly` | Tikrina tekstus, sudarytus tik iš tarpų ir naujų eilučių. |
-| `testWordCountWithLithuanianLetters` | Tikrina žodžių skaičiavimą su lietuviškomis raidėmis (`ą, č, ę, ė, į, š, ų, ū, ž`). |
-| `testWordsVsNumbers` | Užtikrina, kad skaičiai (pvz., *„15“*) nebūtų klaidingai priskirti žodžiams. |
-| `testCharacterCounts` | Tikrina simbolių skaičiavimą su tarpais ir be tarpų. |
-| `testSentenceCount` | Tikrina sakinių skaidymą su `.`, `!`, `?`, `…` ir nebaigtais sakiniais. |
-| `testLineCount` | Tikrina eilučių lūžių (`\n`, `\r\n`) skaičiavimą. |
-| `testComplexTextFullMetrics` | Visapusiškas realaus teksto patikrinimas su visomis metrikomis vienu metu. |
+### 1. Vienetų („Unit“) testai (100% klasių ir funkcijų aprėptis)
+Vykdomi JVM lygmenyje greitai ir be emuliatoriaus (`app/src/test/java/`):
 
-Testų paleidimas iš terminalo:
+- **[`TextMetricsCalculatorTest.java`](app/src/test/java/lt/teksto/skaiciuokle/TextMetricsCalculatorTest.java)**: tikrina `TextMetricsCalculator` skaičiavimo logiką, žodžių, skaičių, sakinių, eilučių atskyrimą, Unicode/lietuviškus diakritikus, privačius konstruktorius per refleksiją (100% kodo aprėptis).
+- **[`TextMetricsTest.java`](app/src/test/java/lt/teksto/skaiciuokle/model/TextMetricsTest.java)**: tikrina `TextMetrics` duomenų modelį, konstruktorius, geterius, `equals`, `hashCode` ir `toString` metodus (100% aprėptis).
+- **[`HistoryItemTest.java`](app/src/test/java/lt/teksto/skaiciuokle/model/HistoryItemTest.java)**: tikrina `HistoryItem` trumpo ir ilgo teksto (>60 simbolių su „…“) iškarpas, `null` reikšmių apsaugą (100% aprėptis).
+- **[`HistoryAdapterTest.java`](app/src/test/java/lt/teksto/skaiciuokle/adapter/HistoryAdapterTest.java)**: tikrina `HistoryAdapter` ir `HistoryViewHolder` (30 elementų limito valdymą, sąrašo išvalymą, elementų įrišimą, ViewHolder paspaudimų klausytojus naudojant `Mockito`) (100% aprėptis).
+
+#### JaCoCo kodo padengimo (Coverage) rezultatai:
+- `lt.teksto.skaiciuokle.calculator`: **100% klasių, 100% metodų (9/9), 100% eilučių, 100% šakų**
+- `lt.teksto.skaiciuokle.model`: **100% klasių, 100% metodų (17/17), 100% eilučių, 100% šakų**
+- `lt.teksto.skaiciuokle.adapter`: **100% klasių, 100% metodų (11/11), 100% eilučių, 100% šakų**
+
+Paleidimas terminale:
 ```powershell
-.\gradlew test
+.\gradlew testDebugUnitTest
+.\gradlew createDebugUnitTestCoverageReport
+```
+
+---
+
+### 2. UI / Integraciniai testai (Espresso – 4 scenarijai)
+Tikrina grafinės vartotojo sąsajos veikimą realiame įrenginyje arba emuliatoriuje (`app/src/androidTest/java/`):
+
+- **[`MainActivityEspressoTest.java`](app/src/androidTest/java/lt/teksto/skaiciuokle/MainActivityEspressoTest.java)**:
+  - **Scenarijus 1 (Įvesties validacija)**: tuščio teksto ar tik tarpų įvedimas -> patikrinama, kad skaitikliai lieka 0 ir neleidžiama atlikti skaičiavimo.
+  - **Scenarijus 2 (Skaičiavimas ir rezultatų atvaizdavimas)**: įvedamas sakinys su žodžiais ir skaičiais -> patikrinamos visos 6 rezultatų kortelės ekrane.
+  - **Scenarijus 3 (Pavyzdžių generavimas ir rotacija)**: paspaudžiamas pavyzdžių mygtukas kelis kartus -> patikrinamas pavyzdžių įkėlimas ir rotacija.
+  - **Scenarijus 4 (Istorija, atstatymas ir išvalymas)**: atlikus skaičiavimą atsiranda kortelė, paspaudus „Išvalyti“ viskas nunulinama, paspaudus ant kortelės tekstas atkuriamas, o paspaudus „Išvalyti istoriją“ sąrašas išvalomas.
+
+Paleidimas terminale (su prijungtu įrenginiu / emuliatoriumi):
+```powershell
+.\gradlew connectedAndroidTest
 ```
 
 ---

@@ -4,13 +4,31 @@ import lt.teksto.skaiciuokle.calculator.TextMetricsCalculator;
 import lt.teksto.skaiciuokle.model.TextMetrics;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.Assert.*;
 
 /**
- * Teksto metrikų skaičiuoklės vienetų (JUnit) testai.
+ * Teksto metrikų skaičiuoklės vienetų (JUnit) testai,
+ * padengiantys 100% klasių, metodų ir sąlygų šakų.
  */
 public class TextMetricsCalculatorTest {
+
+    @Test
+    public void testPrivateConstructorThrowsExceptionViaReflection() throws Exception {
+        Constructor<TextMetricsCalculator> constructor =
+                TextMetricsCalculator.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+
+        try {
+            constructor.newInstance();
+            fail("Privatus konstruktorius privalo mesti UnsupportedOperationException");
+        } catch (InvocationTargetException e) {
+            assertTrue(e.getCause() instanceof UnsupportedOperationException);
+            assertEquals("TextMetricsCalculator yra paslaugų klasė.", e.getCause().getMessage());
+        }
+    }
 
     @Test
     public void testNullAndEmptyInput() {
@@ -113,8 +131,8 @@ public class TextMetricsCalculatorTest {
     }
 
     @Test
-    public void testMultipleSentences() {
-        String text = "Pirmas sakinys. Antras sakinys! Trečias sakinys? Ketvirtas be taško";
+    public void testMultipleSentencesAndEllipsis() {
+        String text = "Pirmas sakinys… Antras sakinys! Trečias sakinys? Ketvirtas be taško";
         TextMetrics result = TextMetricsCalculator.calculate(text);
 
         assertEquals(9, result.getWordCount());
@@ -122,23 +140,47 @@ public class TextMetricsCalculatorTest {
     }
 
     @Test
-    public void testMultilineText() {
-        String text = "Pirmoji eilutė.\nAntroji eilutė.\nTrečioji eilutė.";
-        TextMetrics result = TextMetricsCalculator.calculate(text);
-
-        assertEquals(6, result.getWordCount());
-        assertEquals(3, result.getSentenceCount());
-        assertEquals(3, result.getLineCount());
+    public void testSentenceWithPunctuationOnly() {
+        // Tekstas neturintis jokių raidžių ar skaičių
+        assertEquals(0, TextMetricsCalculator.countSentences("... ! ?? ---"));
+        assertEquals(0, TextMetricsCalculator.countWords("--- ..."));
+        assertEquals(0, TextMetricsCalculator.countNumbers("--- ..."));
     }
 
     @Test
-    public void testIndividualMethods() {
-        String text = "Vienas du trys.";
-        assertEquals(3, TextMetricsCalculator.countWords(text));
-        assertEquals(15, TextMetricsCalculator.countCharactersWithSpaces(text));
-        assertEquals(13, TextMetricsCalculator.countCharactersWithoutSpaces(text));
-        assertEquals(1, TextMetricsCalculator.countSentences(text));
-        assertEquals(1, TextMetricsCalculator.countLines(text));
-        assertEquals(0, TextMetricsCalculator.countNumbers(text));
+    public void testSentenceSplitWithTrailingPunctuationSegment() {
+        // Sakinys, po kurio seka skyrybos ženklai be raidžių
+        String text = "Pirmas sakinys. ... Antras sakinys!";
+        assertEquals(2, TextMetricsCalculator.countSentences(text));
+    }
+
+    @Test
+    public void testMultilineTextAndLineEndings() {
+        // Tikriname \n, \r\n, \r atskirai ir \r pabaigoje
+        String textLf = "A\nB\nC";
+        assertEquals(3, TextMetricsCalculator.countLines(textLf));
+
+        String textCrLf = "A\r\nB\r\nC";
+        assertEquals(3, TextMetricsCalculator.countLines(textCrLf));
+
+        String textCrOnly = "A\rB\rC";
+        assertEquals(3, TextMetricsCalculator.countLines(textCrOnly));
+
+        String textTrailingCr = "A\r";
+        assertEquals(1, TextMetricsCalculator.countLines(textTrailingCr));
+    }
+
+    @Test
+    public void testIndividualMethodsWithNullAndEmpty() {
+        assertEquals(0, TextMetricsCalculator.countWords(null));
+        assertEquals(0, TextMetricsCalculator.countWords("   "));
+        assertEquals(0, TextMetricsCalculator.countNumbers(null));
+        assertEquals(0, TextMetricsCalculator.countNumbers("   "));
+        assertEquals(0, TextMetricsCalculator.countSentences(null));
+        assertEquals(0, TextMetricsCalculator.countSentences("   "));
+        assertEquals(0, TextMetricsCalculator.countCharactersWithSpaces(null));
+        assertEquals(0, TextMetricsCalculator.countCharactersWithoutSpaces(null));
+        assertEquals(0, TextMetricsCalculator.countLines(null));
+        assertEquals(0, TextMetricsCalculator.countLines(""));
     }
 }

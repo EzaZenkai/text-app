@@ -19,6 +19,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
         release {
             optimization {
                 enable = false
@@ -33,6 +36,15 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            all {
+                it.jvmArgs("-Dnet.bytebuddy.experimental=true")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -43,6 +55,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.4.0")
 
     testImplementation(libs.junit)
+    testImplementation("org.mockito:mockito-core:5.14.2")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
